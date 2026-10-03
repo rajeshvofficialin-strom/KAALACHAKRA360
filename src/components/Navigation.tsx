@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { id: 'time-worlds', label: 'Time Worlds' },
   { id: 'fort-heritage', label: 'Fort Heritage' },
   { id: 'traditional-games', label: 'Traditional Games' },
+  { id: 'ancient-toys', label: 'Ancient Toys' },
   { id: 'about', label: 'About' },
 ];
 

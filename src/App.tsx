@@ -5,6 +5,7 @@ import TimeWorlds from '@/components/TimeWorlds';
 import FortHeritage from '@/components/FortHeritage';
 import TraditionalGames from '@/components/TraditionalGames';
 import About from '@/components/About';
+import HeritageGallery from '@/components/gallery/HeritageGallery';
 import GoldenParticles from '@/components/GoldenParticles';
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'time-worlds', 'fort-heritage', 'traditional-games', 'about'];
+      const sections = ['hero', 'time-worlds', 'fort-heritage', 'traditional-games', 'ancient-toys', 'about'];
       const scrollPos = window.scrollY + window.innerHeight / 3;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -65,6 +66,7 @@ function App() {
         <TimeWorlds onWorldSelect={handleWorldSelect} />
         <FortHeritage />
         <TraditionalGames />
+        <HeritageGallery />
         <About />
       </main>
 
