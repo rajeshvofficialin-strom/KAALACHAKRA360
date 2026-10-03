@@ -85,7 +85,7 @@ function ViewerButton({ label, onClick, children, pressed }: { label: string; on
   );
 }
 
-export default function ExhibitViewer3D({ exhibit }: { exhibit: HeritageExhibit }) {
+export default function ExhibitViewer3D({ exhibit, onContextLost }: { exhibit: HeritageExhibit; onContextLost?: () => void }) {
   const controls = useRef<CameraControls>(null);
   const [autoRotate, setAutoRotate] = useState(true);
 
@@ -105,6 +105,17 @@ export default function ExhibitViewer3D({ exhibit }: { exhibit: HeritageExhibit 
         camera={{ position: [...HOME_POSITION], fov: 40, near: 0.1, far: 60 }}
         gl={{ antialias: true, powerPreference: 'high-performance' }}
         aria-label={`Interactive 3D view of ${exhibit.name}`}
+        style={{ touchAction: 'pan-y' }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener(
+            'webglcontextlost',
+            (event) => {
+              event.preventDefault();
+              onContextLost?.();
+            },
+            { once: true },
+          );
+        }}
       >
         <color attach="background" args={['#0b0806']} />
         <fog attach="fog" args={['#0b0806', 7, 18]} />
@@ -146,6 +157,8 @@ export default function ExhibitViewer3D({ exhibit }: { exhibit: HeritageExhibit 
           maxPolarAngle={Math.PI / 2 - 0.04}
           smoothTime={0.45}
           dollySpeed={0.6}
+          // ROTATE / DOLLY / TRUCK / NONE: wheel stays free so the page keeps scrolling over the canvas.
+          mouseButtons={{ left: 1, middle: 16, right: 2, wheel: 0 }}
         />
         <AutoRotate controls={controls} enabled={autoRotate} />
       </Canvas>
@@ -180,7 +193,7 @@ export default function ExhibitViewer3D({ exhibit }: { exhibit: HeritageExhibit 
       </div>
 
       <p className="pointer-events-none absolute right-3 top-3 hidden font-body text-xs italic text-amber-100/50 sm:right-4 sm:top-4 md:block">
-        Drag to rotate · Scroll or pinch to zoom
+        Drag to rotate · Pinch or use buttons to zoom
       </p>
     </div>
   );

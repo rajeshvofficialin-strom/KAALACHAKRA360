@@ -7,7 +7,10 @@ const ExhibitViewer3D = lazy(() => import('./three/ExhibitViewer3D'));
 function supportsWebGL() {
   try {
     const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'));
+    const gl = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
+    // Release the probe context immediately; browsers cap live WebGL contexts.
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    return Boolean(gl);
   } catch {
     return false;
   }
@@ -17,6 +20,9 @@ class ViewerErrorBoundary extends Component<{ fallback: ReactNode; children: Rea
   state = { failed: false };
   static getDerivedStateFromError() {
     return { failed: true };
+  }
+  componentDidCatch(error: unknown) {
+    console.error('[KAALACHAKRA360] 3D viewer failed to render:', error);
   }
   render() {
     return this.state.failed ? this.props.fallback : this.props.children;
@@ -39,7 +45,7 @@ function LoadingScreen() {
   );
 }
 
-function StaticFallback({ exhibit, reason }: { exhibit: HeritageExhibit; reason: string }) {
+function StaticFallback({ exhibit, reason, onRetry }: { exhibit: HeritageExhibit; reason: string; onRetry?: () => void }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-[radial-gradient(ellipse_at_center,#2a1b10_0%,#0b0806_70%)] p-6 text-center">
       <div
@@ -52,6 +58,15 @@ function StaticFallback({ exhibit, reason }: { exhibit: HeritageExhibit; reason:
         <p className="font-display text-lg text-amber-100">{exhibit.name}</p>
         <p className="mt-2 max-w-sm font-body text-sm text-amber-100/60">{reason}</p>
       </div>
+      {onRetry && (
+        <button
+          type="button"
+          onClick={onRetry}
+          className="rounded-full border border-amber-500/50 px-4 py-2 font-display text-xs uppercase tracking-[0.18em] text-amber-200 transition-colors hover:bg-amber-500/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+        >
+          Retry 3D view
+        </button>
+      )}
     </div>
   );
 }
@@ -77,18 +92,35 @@ export default function ViewerStage({ exhibit }: { exhibit: HeritageExhibit }) {
     return () => observer.disconnect();
   }, []);
 
+  const [attempt, setAttempt] = useState(0);
+  const [contextLost, setContextLost] = useState(false);
+  const retry = () => {
+    setContextLost(false);
+    setAttempt((n) => n + 1);
+  };
+
   const unavailable = (
-    <StaticFallback exhibit={exhibit} reason="The 3D model could not be displayed on this device. All exhibit details remain available below." />
+    <StaticFallback
+      exhibit={exhibit}
+      reason="The 3D model could not be displayed on this device. All exhibit details remain available below."
+      onRetry={retry}
+    />
   );
 
   return (
     <div ref={containerRef} className="h-full w-full">
       {!webgl ? (
         <StaticFallback exhibit={exhibit} reason="Your browser does not support WebGL, so the 3D hall is unavailable. Exhibit details remain fully accessible." />
+      ) : contextLost ? (
+        <StaticFallback
+          exhibit={exhibit}
+          reason="The graphics context was interrupted by the browser. You can restart the 3D hall; exhibit details remain available below."
+          onRetry={retry}
+        />
       ) : inView ? (
-        <ViewerErrorBoundary fallback={unavailable}>
+        <ViewerErrorBoundary key={attempt} fallback={unavailable}>
           <Suspense fallback={<LoadingScreen />}>
-            <ExhibitViewer3D exhibit={exhibit} />
+            <ExhibitViewer3D exhibit={exhibit} onContextLost={() => setContextLost(true)} />
           </Suspense>
         </ViewerErrorBoundary>
       ) : (
