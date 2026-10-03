@@ -3,7 +3,7 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { ContactShadows, RoundedBox } from '@react-three/drei';
 import { CanvasTexture, CatmullRomCurve3, RepeatWrapping, SRGBColorSpace, Vector3 } from 'three';
 
-type GameId = 'royal-ur' | 'hnefatafl' | 'petteia' | 'mehen' | 'patolli' | 'chaturanga' | 'puluc' | 'sugoroku' | 'pallankuzhi' | 'rota' | 'chowka-bhara' | 'hyena-game' | 'tlachtli' | 'episkyros' | 'harpastum';
+export type GameId = 'royal-ur' | 'hnefatafl' | 'petteia' | 'mehen' | 'patolli' | 'chaturanga' | 'puluc' | 'sugoroku' | 'pallankuzhi' | 'senet' | 'rota' | 'chowka-bhara' | 'hyena-game' | 'tlachtli' | 'episkyros' | 'harpastum';
 type Point = [number, number, number];
 
 const clayGames = new Set<GameId>(['mehen', 'patolli', 'tlachtli']);
@@ -74,6 +74,7 @@ function Scene({ gameId }: { gameId: GameId }) {
     {gameId === 'puluc' && <PulucBoard texture={surface} />}
     {gameId === 'sugoroku' && <SugorokuBoard texture={surface} />}
     {gameId === 'pallankuzhi' && <PallankuzhiBoard texture={surface} />}
+    {gameId === 'senet' && <SenetBoard texture={surface} />}
     {gameId === 'rota' && <RotaBoard texture={surface} />}
     {gameId === 'chowka-bhara' && <ChowkaBoard texture={surface} />}
     {gameId === 'hyena-game' && <HyenaBoard texture={surface} />}
@@ -179,6 +180,19 @@ function MehenBoard({ texture }: { texture: CanvasTexture }) {
     <mesh castShadow><tubeGeometry args={[coil, 240, 0.105, 12, false]} /><meshPhysicalMaterial color="#b98543" roughness={0.48} metalness={0.19} /></mesh>
     <mesh castShadow position={[0, 0.23, 0]}><sphereGeometry args={[0.16, 32, 24]} /><meshPhysicalMaterial color="#ba4a31" roughness={0.43} clearcoat={0.2} /></mesh>
     {[0.35, 0.7, 1.05, 1.37].map((angle, index) => <Man key={angle} at={[Math.cos(angle * 2) * (0.95 - index * 0.14), 0.23, Math.sin(angle * 2) * (0.95 - index * 0.14)]} color={index % 2 ? ivory : '#b44c31'} radius={0.075} />)}
+  </group>;
+}
+
+function SenetBoard({ texture }: { texture: CanvasTexture }) {
+  const route: Point[] = Array.from({ length: 30 }, (_, index) => {
+    const row = Math.floor(index / 10);
+    const column = row % 2 === 0 ? index % 10 : 9 - (index % 10);
+    return [-1.35 + column * 0.3, 0.2, -0.66 + row * 0.66];
+  });
+  return <group>
+    <Plank texture={texture} size={[3.55, 0.23, 2.35]} />
+    {route.map((at, index) => <Tile key={index} at={at} width={0.27} depth={0.53} color={index >= 25 ? index % 2 ? '#947044' : '#765536' : index % 2 ? '#5b4431' : '#9a7546'} />)}
+    {[route[2], route[7], route[12], route[18], route[23]].map((at, index) => <Man key={index} at={[at[0], 0.24, at[2]]} color={index % 2 ? '#d1ad66' : '#963f30'} radius={0.075} />)}
   </group>;
 }
 

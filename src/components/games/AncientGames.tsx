@@ -5,7 +5,7 @@ import { BookOpen, Lightbulb, Pause, Play, RotateCcw, Undo2, X } from 'lucide-re
 import type { Mesh } from 'three';
 import { createPortal } from 'react-dom';
 import type { Difficulty } from './useGameState';
-import AncientGameCardVisual from './AncientGameCardVisual';
+import AncientGameCardVisual, { type GameId } from './AncientGameCardVisual';
 
 type GameKind = 'race' | 'mehen' | 'strategy' | 'chaturanga' | 'rota' | 'sow' | 'sport';
 type GameMode = 'ai' | 'local' | 'practice';
@@ -13,7 +13,7 @@ type Owner = 0 | 1;
 type PieceKind = 'man' | 'king' | 'pawn' | 'rook' | 'knight' | 'bishop';
 
 interface AncientGame {
-  id: string;
+  id: GameId;
   name: string;
   origin: string;
   kind: GameKind;
@@ -54,7 +54,7 @@ export const ANCIENT_GAMES: AncientGame[] = [
   { id: 'chaturanga', name: 'Chaturanga', origin: 'India', kind: 'chaturanga', size: 8, ruleset: 'Four-division, two-player digital reconstruction', reconstruction: 'Historical Chaturanga had regional variants; this accessible two-player ruleset uses recognizable piece movement and capture.', rules: ['Move a piece according to its displayed role: king, rook, bishop, knight, or pawn.', 'Capture by landing on an opposing piece.', 'The game ends when a king is captured.', 'This reconstruction omits check and checkmate.'] },
   { id: 'puluc', name: 'Puluc', origin: 'Maya communities of Guatemala', kind: 'race', size: 20, ruleset: 'K’iche’ race-game reconstruction', reconstruction: 'Rules are based on a documented modern K’iche’ form and are presented as a reconstruction, not a single ancient standard.', rules: ['Throw marked sticks to determine movement.', 'Move pieces along the route and capture opposing pieces by landing on them.', 'Captured pieces travel with the captor until carried off the far end.', 'The player who captures and carries off all opposing pieces wins.'] },
   { id: 'sugoroku', name: 'Sugoroku', origin: 'Japan', kind: 'race', size: 20, ruleset: 'E-sugoroku race-board reconstruction', reconstruction: 'Sugoroku names several Japanese board-game forms; this version uses a simple illustrated race-board format.', rules: ['Roll a die and move one token along the route.', 'Follow the instruction on a special marked space when you land there.', 'Reach the final space with an exact or lower roll to win.'] },
-  { id: 'pallankuzhi', name: 'Pallankuzhi', origin: 'Tamil Nadu, India', kind: 'sow', size: 14, ruleset: 'Two-row, 14-pit sowing variant', rules: ['Choose a non-empty pit on your row and sow its seeds counter-clockwise.', 'When the last seed lands in an empty pit on your side, capture it and the opposite pit.', 'Players alternate turns; most captured seeds wins when a row is empty.'] },
+  { id: 'senet', name: 'Senet', origin: 'Ancient Egypt', kind: 'race', size: 30, ruleset: 'Playable 30-square race-game reconstruction', reconstruction: 'Senet boards survive, but the original rules are not fully known. This accessible digital version uses a die and a simplified race-game ruleset.', rules: ['Move pieces along a shared route across a three-row board.', 'In this digital reconstruction, roll the die to determine how far a piece advances.', 'Use the marked final squares strategically as pieces approach the end of the route.', 'The first player to move all their pieces off the board wins.'] },
   { id: 'rota', name: 'Rota', origin: 'Roman world', kind: 'rota', size: 9, ruleset: 'Roman Rota, three-in-a-row reconstruction', reconstruction: 'The surviving board diagram supports a three-in-a-row game; details of play are reconstructed.', rules: ['Place three pieces each, alternating turns.', 'After placement, move one piece to an adjacent empty point.', 'Make a line of three to win.'] },
   { id: 'chowka-bhara', name: 'Chowka Bhara / Ashte Kashte', origin: 'Karnataka, India', kind: 'race', size: 20, ruleset: 'Cowrie-shell race-game reconstruction', reconstruction: 'Regional boards and entry/capture rules vary; this digital version clearly selects one simplified variant.', rules: ['Throw four cowrie shells to determine movement.', 'Bring pieces onto the route, race around, and reach home.', 'Landing on an unprotected opponent returns it to start.', 'The first player to bring all four pieces home wins.'] },
   { id: 'hyena-game', name: 'Game of the Hyena', origin: 'Northeast Africa', kind: 'race', size: 20, ruleset: 'Hyena-game race reconstruction', reconstruction: 'This reconstruction uses the documented race-and-rescue structure; local board and move variants exist.', rules: ['Race a family piece toward the well and back.', 'A hyena piece follows the same route and can capture family pieces.', 'Reach home with your family before the hyena catches them.'] },
