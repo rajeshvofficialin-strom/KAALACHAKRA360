@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { ChevronRight, Play, Eye, Wrench, BookOpen, FlaskConical, MapPin, Clock, Layers, Sparkles, X, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
-import { ANCIENT_TOYS, EVIDENCE_LABELS, type AncientToy } from '@/data/toyData';
+import { ChevronRight, Eye, MapPin, Sparkles, CheckCircle2 } from 'lucide-react';
+import { HERITAGE_TOY_EXHIBITS, type HeritageToyExhibit } from './heritageToyExhibits';
 import { useToyCollection } from './useToyCollection';
-import ToyViewer from './ToyViewer';
+import HeritageToyViewer from './HeritageToyViewer';
 import ToyMiniGame from './ToyMiniGame';
 
 export default function AncientToys() {
-  const [viewingToy, setViewingToy] = useState<AncientToy | null>(null);
-  const [playingToy, setPlayingToy] = useState<AncientToy | null>(null);
+  const [viewingToy, setViewingToy] = useState<HeritageToyExhibit | null>(null);
+  const [playingToy, setPlayingToy] = useState<HeritageToyExhibit | null>(null);
   const collection = useToyCollection();
 
   return (
@@ -25,8 +25,8 @@ export default function AncientToys() {
             Ancient Indian Toys
           </h2>
           <p className="font-body text-lg text-amber-100/60 max-w-3xl mx-auto">
-            Digitally preserve and play with ancient Indian toys from the Indus Valley Civilization.
-            Each toy includes historical context, interactive 3D viewing, and playable mini-games.
+            Explore ten handcrafted heritage exhibits in a cinematic 3D gallery. Rotate each digital model,
+            discover its regional story, and play with its interactive interpretation.
           </p>
         </div>
 
@@ -68,15 +68,15 @@ export default function AncientToys() {
 
         {/* Toy cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {ANCIENT_TOYS.map((toy, idx) => {
-            const evidence = EVIDENCE_LABELS[toy.evidenceLevel];
+          {HERITAGE_TOY_EXHIBITS.map((exhibit, idx) => {
+            const toy = exhibit.toy;
             const isDiscovered = collection.state.discovered.includes(toy.id);
             const hasPlayed = collection.state.played.includes(toy.id);
             return (
               <div
                 key={toy.id}
                 className="heritage-card rounded-xl overflow-hidden group cursor-pointer"
-                onClick={() => { collection.discover(toy.id); setViewingToy(toy); }}
+                onClick={() => { collection.discover(toy.id); setViewingToy(exhibit); }}
                 style={{ animationDelay: `${idx * 0.08}s` }}
               >
                 {/* Toy preview area */}
@@ -90,8 +90,8 @@ export default function AncientToys() {
                     <ToyCardModel toyId={toy.id} />
                   </div>
                   {/* Evidence badge */}
-                  <div className={`absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-display border ${evidence.color}`}>
-                    {evidence.label.split(' ')[0]}
+                  <div className={`absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-display border ${exhibit.reconstructionNote ? 'text-sky-300 border-sky-700/40 bg-sky-950/30' : 'text-amber-300 border-amber-700/40 bg-amber-950/30'}`}>
+                    {exhibit.reconstructionNote ? 'Digital reconstruction' : 'Craft exhibit'}
                   </div>
                   {/* Discovered badge */}
                   {isDiscovered && (
@@ -102,15 +102,14 @@ export default function AncientToys() {
                 </div>
                 {/* Info */}
                 <div className="p-4">
-                  <p className="font-sanskrit text-amber-300/40 text-xs mb-1">{toy.sanskritName}</p>
-                  <h3 className="font-display text-base font-bold text-amber-100 leading-tight mb-2">{toy.name}</h3>
+                  <h3 className="font-display text-base font-bold text-amber-100 leading-tight mb-2">{exhibit.title}</h3>
                   <div className="flex items-center gap-2 text-xs text-amber-100/40 mb-2">
                     <MapPin size={10} />
-                    <span className="font-body">{toy.site}</span>
+                    <span className="font-body">{exhibit.region}</span>
                   </div>
-                  <p className="font-body text-sm text-amber-100/50 line-clamp-2 mb-3">{toy.description}</p>
+                  <p className="font-body text-sm text-amber-100/50 line-clamp-2 mb-3">{exhibit.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="font-display text-xs text-amber-400/50">{toy.period}</span>
+                    <span className="font-display text-xs text-amber-400/50">{exhibit.period}</span>
                     <div className="flex items-center gap-1.5">
                       {hasPlayed && <CheckCircle2 size={12} className="text-green-400" />}
                       <span className="font-display text-xs tracking-wide uppercase text-amber-400/70 group-hover:text-amber-300 transition-colors flex items-center gap-1">
@@ -127,22 +126,22 @@ export default function AncientToys() {
 
       {/* Toy Viewer Modal */}
       {viewingToy && !playingToy && (
-        <ToyViewer
-          toy={viewingToy}
+        <HeritageToyViewer
+          exhibit={viewingToy}
           onClose={() => setViewingToy(null)}
           onPlay={() => { setPlayingToy(viewingToy); }}
-          isDiscovered={collection.state.discovered.includes(viewingToy.id)}
-          hasPlayed={collection.state.played.includes(viewingToy.id)}
+          isDiscovered={collection.state.discovered.includes(viewingToy.toy.id)}
+          hasPlayed={collection.state.played.includes(viewingToy.toy.id)}
         />
       )}
 
       {/* Toy Mini-Game Modal */}
       {playingToy && (
         <ToyMiniGame
-          toy={playingToy}
-          onComplete={(score) => {
-            collection.markPlayed(playingToy.id, playingToy.xpReward);
-            collection.addBadge(playingToy.badge);
+          toy={playingToy.toy}
+          onComplete={() => {
+            collection.markPlayed(playingToy.toy.id, playingToy.toy.xpReward);
+            collection.addBadge(playingToy.toy.badge);
           }}
           onClose={() => { setPlayingToy(null); setViewingToy(null); }}
         />

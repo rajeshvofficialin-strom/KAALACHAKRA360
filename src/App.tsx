@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import TimeWorlds from '@/components/TimeWorlds';
 import FortHeritage from '@/components/FortHeritage';
 import TraditionalGames from '@/components/TraditionalGames';
+import AncientToys from '@/components/toys/AncientToys';
 import About from '@/components/About';
 import GoldenParticles from '@/components/GoldenParticles';
 
@@ -65,6 +66,7 @@ function App() {
         <TimeWorlds onWorldSelect={handleWorldSelect} />
         <FortHeritage />
         <TraditionalGames />
+        <AncientToys />
         <About />
       </main>
 

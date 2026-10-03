@@ -39,17 +39,29 @@ export type GameCategory = 'board' | 'physical' | 'strategy' | 'skill';
 export interface TraditionalGame {
   id: string;
   name: string;
+  /** Tamil / other regional or vernacular name of the game */
+  regionalName?: string;
   origin: string;
+  /** Region or cultural tradition the game belongs to */
+  region?: string;
   description: string;
+  /** Historical & cultural context (documented / traditional — no invented claims) */
+  history?: string;
   type: GameCategory;
   category: string;
   players: string;
+  /** Suitable age range for players */
+  ageRange?: string;
   image: string;
+  /** Optional attribution for the heritage visual */
+  imageSource?: string;
   rules: string[];
   playable: boolean;
   xpReward: number;
   achievements: string[];
   isNew?: boolean;
+  /** 1–15 ordering in the featured grid; unset means it appears under "More Games" */
+  featuredRank?: number;
 }
 
 export const TIME_WORLDS: TimeWorld[] = [
@@ -600,11 +612,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'pallanguzhi',
     name: 'Pallanguzhi',
+    featuredRank: 1,
+    regionalName: 'பல்லாங்குழி (Pallankuzhi)',
     origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu · South India',
     description: 'An ancient mancala-style board game played on a wooden board with 14 pits and cowrie shells or seeds. It teaches counting, strategy, and planning. Traditionally played by women during festivals.',
+    history: 'Pallanguzhi belongs to the mancala family of sowing games played across Asia for centuries. In Tamil Nadu it is a household and festival game, traditionally played with tamarind seeds or cowrie shells, and is valued for teaching counting, quick arithmetic and strategy.',
     type: 'board',
     category: 'Board Games',
     players: '2 players',
+    ageRange: '6+ years',
     image: 'https://images.pexels.com/photos/13160642/pexels-photo-13160642.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'The board has 14 pits (7 per player) with 6 seeds in each pit at the start',
@@ -623,11 +640,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'aadu-puli',
     name: 'Aadu Puli Aattam (Goats & Tigers)',
+    featuredRank: 2,
+    regionalName: 'ஆடு புலி ஆட்டம் (Aadu Puli Aattam)',
     origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu · South India',
     description: 'An asymmetric strategy game where 3 tigers hunt 15 goats on a triangular grid. Tigers can jump to capture goats, while goats try to trap the tigers so they cannot move. A game of pure strategy.',
+    history: 'Aadu Puli Aattam is a traditional Tamil hunt game belonging to the "tigers and goats" family of asymmetric board games found across India and South Asia, in which a few powerful pieces try to capture many weaker ones by trapping them on a network of lines.',
     type: 'board',
     category: 'Board Games',
     players: '2 players',
+    ageRange: '7+ years',
     image: 'https://images.pexels.com/photos/14098048/pexels-photo-14098048.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'Played on a triangular grid with 23 intersection points',
@@ -647,11 +669,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'kabaddi',
     name: 'Kabaddi',
+    featuredRank: 4,
+    regionalName: 'கபடி (Kabaddi) · कबड्डी',
     origin: 'Ancient India (over 4000 years old)',
+    region: 'Indian subcontinent',
     description: 'A contact sport that combines wrestling, tag, and breath control. A "raider" enters the opposing court, must touch as many defenders as possible, and return — all while holding their breath and chanting "kabaddi."',
+    history: 'Kabaddi is a traditional team sport of the Indian subcontinent that combines tag, wrestling and breath control. Long played in India, it is today an internationally recognised sport, with many regional forms and names across South Asia.',
     type: 'physical',
     category: 'Physical Games',
     players: '2 teams of 7',
+    ageRange: '12+ years',
     image: 'https://images.pexels.com/photos/39318374/pexels-photo-39318374.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'Two teams of 7 players face each other on opposite halves of the court',
@@ -670,11 +697,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'kho-kho',
     name: 'Kho-Kho',
+    featuredRank: 6,
+    regionalName: 'खो-खो (Kho-Kho)',
     origin: 'Ancient Maharashtra, India',
+    region: 'Maharashtra · pan-India',
     description: 'A tag-based sport where "chasers" pursue "runners" around the field. Chasers can only move in one direction and must tap a teammate to switch positions. It tests speed, agility, and teamwork.',
+    history: 'Kho-Kho is a traditional Indian tag sport closely associated with Maharashtra, in which seated chasers transfer the chase with a "Kho" tap. It grew as a playground and physical-culture game and is today played competitively across India.',
     type: 'physical',
     category: 'Physical Games',
     players: '2 teams of 9',
+    ageRange: '10+ years',
     image: 'https://images.pexels.com/photos/27833730/pexels-photo-27833730.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'One team sits in a line (pillars) across the center of the field',
@@ -693,11 +725,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'gilli-danda',
     name: 'Gilli Danda',
+    featuredRank: 7,
+    regionalName: 'கிட்டிப் புல் (Kitti Pul) · गिल्ली डंडा',
     origin: 'Ancient India (over 2500 years old)',
+    region: 'Indian subcontinent',
     description: 'Considered an ancestor of cricket and baseball. A small wooden peg (gilli) is struck into the air with a larger stick (danda), then hit as far as possible. The distance determines the score.',
+    history: 'Gilli Danda is a traditional tip-cat game of the Indian subcontinent played with two wooden sticks. It is known by many regional names — chinni-dandu, kuttiyum-kolum, gooti-billa and kitti-pullu — and is often described as sharing an ancestry with modern bat-and-ball games.',
     type: 'physical',
     category: 'Physical Games',
     players: '2 or more players',
+    ageRange: '8+ years',
     image: 'https://images.pexels.com/photos/6849609/pexels-photo-6849609.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'A small wooden peg (gilli) is placed in a small oval depression on the ground',
@@ -741,11 +778,16 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
   {
     id: 'lagori',
     name: 'Lagori / Seven Stones',
+    featuredRank: 8,
+    regionalName: 'லகோரி (Lagori) · ಲಗೋರಿ',
     origin: 'Karnataka & Maharashtra, India',
+    region: 'Karnataka · Maharashtra · South India',
     description: 'A classic outdoor game where a ball is thrown to knock down a stack of seven flat stones. The throwing team then rebuilds the stack while the opposing team tries to hit them with the ball. Tests aim, speed, and teamwork.',
+    history: 'Lagori, also known as Seven Stones, is a traditional South Indian street game in which a ball is thrown at a stack of seven flat stones. It is played across Karnataka, Maharashtra and neighbouring regions under several local names.',
     type: 'physical',
     category: 'Physical Games',
     players: '2 teams of 3-6',
+    ageRange: '7+ years',
     image: 'https://images.pexels.com/photos/11344270/pexels-photo-11344270.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
     rules: [
       'Seven flat stones are stacked in decreasing size to form a tower',
@@ -954,7 +996,278 @@ export const TRADITIONAL_GAMES: TraditionalGame[] = [
     achievements: ['Dice Roller', 'Goan Strategist', 'Tabul Phale Master'],
     isNew: true,
   },
+
+  /* -------------------------------------------------------------------
+     Featured additions — brings the main Traditional Games grid to 15.
+     Content is traditional/cultural context only; no invented claims.
+     ------------------------------------------------------------------- */
+  {
+    id: 'paramapada-sopanam',
+    name: 'Paramapada Sopanam',
+    featuredRank: 3,
+    regionalName: 'பரமபத சோபானம் (Paramapada Sopanam)',
+    origin: 'India (South Indian & pan-Indian tradition)',
+    region: 'South India · pan-India',
+    description: 'An ancient Indian board game of ladders and snakes that maps the soul\'s journey toward liberation (moksha). Players climb the rungs of virtue and slide down the snakes of vice across a numbered board.',
+    history: 'Known in India as Moksha Patam, Gyan Chaupar or Vaikuntapali, and in Tamil tradition as Paramapada Sopanam ("the ladder to the supreme abode"). The game was played in India long before it was adapted in Victorian England into the modern game of Snakes and Ladders, which kept the board but largely dropped its moral symbolism.',
+    type: 'board',
+    category: 'Board Games',
+    players: '2-4 players',
+    ageRange: '6+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gyan_Chaupar_National_Museum_India.JPG/960px-Gyan_Chaupar_National_Museum_India.JPG',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'The board is a grid of numbered squares ending at the highest square (liberation)',
+      'Players use dice or cowrie shells and move their piece by the number rolled',
+      'Ladders represent virtues and lift a piece to a higher, favourable square',
+      'Snakes represent vices and send a piece down to a lower square',
+      'The first player to reach the final square wins',
+      'Historically, the moral meaning of each square was explained while playing',
+      'Different regions used their own boards, symbols and naming',
+    ],
+    playable: false,
+    xpReward: 45,
+    achievements: ['Rung Climber', 'Moksha Seeker', 'Board Historian'],
+  },
+  {
+    id: 'silambam',
+    name: 'Silambam',
+    featuredRank: 5,
+    regionalName: 'சிலம்பம் (Silambam / Silambattam)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu',
+    description: 'A traditional Tamil martial art built around the long bamboo staff (silambam kambu). Practitioners train in footwork, spins, blocks and strikes, developing balance, speed and discipline.',
+    history: 'Silambam is a traditional Tamil staff-fighting art of southern India. It is linked to early Tamil literature and culture and remains a living practice today, taught in schools and shown in public demonstrations and festivals.',
+    type: 'skill',
+    category: 'Martial Arts',
+    players: 'Individual · pairs (sparring)',
+    ageRange: '8+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Weapons_images_of_Silambam.jpg/960px-Weapons_images_of_Silambam.jpg',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'The primary weapon is a long bamboo staff, the silambam kambu',
+      'Students first learn stances, footwork and grips',
+      'Basic techniques include straight strikes, sweeps, blocks and spinning moves',
+      'Spins are used to gather speed and defend from multiple directions',
+      'Advanced practice includes sparring with sticks of varying length',
+      'Balance, timing and breath control are trained alongside strength',
+      'Discipline and respect for the teacher (guru) are central to training',
+    ],
+    playable: false,
+    xpReward: 55,
+    achievements: ['Staff Novice', 'Spin Master', 'Discipline Keeper'],
+  },
+  {
+    id: 'uriyadi',
+    name: 'Uriyadi',
+    featuredRank: 9,
+    regionalName: 'உறியடி (Uriyadi)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu · South India',
+    description: 'A festive pot-breaking game. A clay pot (uri) filled with curd, coloured water or flowers is hung high on a rope, and participants take turns trying to strike and break it with a stick while a crowd cheers.',
+    history: 'Uriyadi is played as a folk sport during Krishna Janmashtami (Gokulashtami) in Tamil Nadu and neighbouring regions, recalling the playful childhood exploits associated with Krishna in tradition. It is closely related to the Dahi Handi tradition celebrated in parts of western India.',
+    type: 'physical',
+    category: 'Physical Games',
+    players: 'Individual · group / team relay',
+    ageRange: '10+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Uriyadi_Competition_Onam_20.jpg/960px-Uriyadi_Competition_Onam_20.jpg',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'A clay pot is filled with curd, coloured water or flowers and hung high on a rope',
+      'Participants take turns trying to break the pot with a stick',
+      'The pot is often raised higher after each successful round',
+      'Team members may form a human pyramid to reach the pot',
+      'Some traditional versions blindfold the person striking the pot',
+      'The person or team that breaks the pot is celebrated',
+      'The game is played amid music, singing and festive cheer',
+    ],
+    playable: false,
+    xpReward: 45,
+    achievements: ['Pot Striker', 'Crowd Favourite', 'Festival Champion'],
+  },
+  {
+    id: 'bambaram',
+    name: 'Bambaram',
+    featuredRank: 10,
+    regionalName: 'பம்பரம் (Bambaram) · लट्टू (Lattu)',
+    origin: 'Tamil Nadu & pan-India',
+    region: 'South India · pan-India',
+    description: 'The traditional spinning-top game. A wooden top is spun by unwinding a string wound tightly around it; players compete to keep their top spinning longest, or to knock rivals\' tops out of a drawn circle.',
+    history: 'Spinning tops are an ancient plaything found in many cultures, and India has a long living tradition of wooden tops known by regional names such as bambaram (Tamil), lattu (Hindi) and buguri (Kannada). This entry is presented as a living folk game rather than a claim of a single origin.',
+    type: 'skill',
+    category: 'Skill Games',
+    players: '1+ players (competitive)',
+    ageRange: '5+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Spinning_Top.jpg/960px-Spinning_Top.jpg',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'A string is wound tightly from the pointed tip up to the top of the bambaram',
+      'Holding the free end, the player snaps the hand back to release the top spinning',
+      'The top must land on its point and keep spinning on the ground',
+      'Players take turns and compare how long each top spins',
+      'In the circle game, players try to knock opponents\' tops out of a drawn ring',
+      'Bumping a rival top out of the circle scores for the striker',
+      'The player left with a spinning top inside the circle wins',
+    ],
+    playable: false,
+    xpReward: 40,
+    achievements: ['Quick Winder', 'Longest Spin', 'Top Striker'],
+  },
+  {
+    id: 'nondi',
+    name: 'Nondi',
+    featuredRank: 11,
+    regionalName: 'நொண்டி (Nondi / Pandi)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu · South India',
+    description: 'A traditional hopping game in which a player jumps on one leg along a marked layout of squares, chasing or tagging others who must also hop. It builds balance, stamina and agility.',
+    history: 'Nondi (from a Tamil word meaning "lame" or one-legged) is a South Indian street game of the hopscotch family. Like other children\'s hopping games it belongs to the living folk-play tradition of the region and is passed on informally in playgrounds.',
+    type: 'physical',
+    category: 'Physical Games',
+    players: '2 or more players',
+    ageRange: '6+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Game_paandi_3.jpg/960px-Game_paandi_3.jpg',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'A layout of squares is drawn on the ground with chalk',
+      'Players hop on one leg from square to square, keeping the other foot raised',
+      'A player may not rest the raised foot on the ground while hopping',
+      'Landing on a line or stepping down puts the player out',
+      'In chase versions, one player tries to tag others while all must hop',
+      'Players take turns, and the last player still hopping wins',
+      'Speed, balance and accurate jumps decide the winner',
+    ],
+    playable: false,
+    xpReward: 40,
+    achievements: ['Steady Hopper', 'Tag Champion', 'Balance Master'],
+  },
+  {
+    id: 'kitti-pul',
+    name: 'Kitti Pul',
+    featuredRank: 12,
+    regionalName: 'கிட்டிப் புல் (Kitti-Pullu)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu',
+    description: 'A traditional tip-cat game played with two wooden sticks — a long striker (kitti / kol) and a small piece (pullu / gilli). The small piece is flicked into the air and struck as far as possible, and the distance is measured in stick-lengths for points.',
+    history: 'Kitti Pul is the Tamil name for the tip-cat family of games known across India as Gilli Danda (and by regional names such as chinni-dandu, kuttiyum-kolum and gooti-billa). It is a rural and small-town street game of long standing in the Indian subcontinent.',
+    type: 'skill',
+    category: 'Skill Games',
+    players: '2 teams (4+ players)',
+    ageRange: '8+ years',
+    image: '',
+    rules: [
+      'A small oval pit or circle is drawn on open ground',
+      'The small piece (pullu) is placed in the pit and flicked into the air with the long stick',
+      'While it is airborne, the player strikes it as far as possible',
+      'Fielders try to catch the piece — a clean catch puts the striker out',
+      'If not caught, the distance from the pit is measured in stick-lengths for points',
+      'The striker may get extra chances to hit the piece in the air',
+      'Teams swap roles, and the team with the higher total wins',
+      'The game is played carefully, as the piece can travel fast and far',
+    ],
+    playable: false,
+    xpReward: 45,
+    achievements: ['Big Hitter', 'Distance Master', 'Team Striker'],
+  },
+  {
+    id: 'dayakattai',
+    name: 'Dayakattai',
+    featuredRank: 13,
+    regionalName: 'தாயக்கட்டை (Thaya Kattai)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu',
+    description: 'A traditional Tamil dice-and-board race game played with a pair of long cuboid dice. Players move their coins around a cross-shaped board, aiming to bring all pieces to the centre while "cutting" (sending home) opponents\' pieces.',
+    history: 'Dayakattai is a Tamil dice game comparable to Pachisi. It traditionally uses a pair of long rectangular dice — often made of brass — whose long faces are marked 1, 2, 3 and 0. The word "Daya" is derived from the Tamil "Thayam", meaning "first stone", and the game is played in both a short and a long format.',
+    type: 'board',
+    category: 'Board Games',
+    players: '2 or 4 players (teams)',
+    ageRange: '8+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Dayakattai.png',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'Each player starts with coins or chips at a "home" in the centre of the board',
+      'A pair of long cuboid dice (faces 1, 2, 3 and 0) is rolled each turn',
+      'A "Thayam" (a 0 on one die and a 1 on the other) is needed to bring a piece onto the board',
+      'Pieces advance along the player\'s side and then clockwise around the board',
+      'Rolling 1, 5, 6 or 12 grants another roll',
+      'Rolls may be split between several pieces or used on one piece',
+      'Landing on an opponent\'s space "cuts" that piece back to its home',
+      'Marked safe zones (X squares) protect pieces from being cut',
+      'After a lap, pieces climb the home leg and need an exact roll to reach the centre',
+      'The first player to bring all pieces to the centre wins',
+    ],
+    playable: false,
+    xpReward: 50,
+    achievements: ['Lucky Roller', 'Safe Navigator', 'Board Champion'],
+  },
+  {
+    id: 'thayam',
+    name: 'Thayam',
+    featuredRank: 14,
+    regionalName: 'தாயம் (Thayam)',
+    origin: 'Tamil Nadu, South India',
+    region: 'Tamil Nadu',
+    description: 'Thayam is the traditional Tamil name for the region\'s cross-shaped dice-and-race board game, played with long dice and colourful coins. It shares its deep ancestry with Dayakattai and the Pachisi family of games.',
+    history: 'Thayam is described as a traditional game of Tamil Nadu, and the word is the root of "Daya" in Dayakattai. It belongs to the same cross-and-circle board-game family as Pachisi, a lineage that also connects to games later carried and adapted around the world.',
+    type: 'board',
+    category: 'Board Games',
+    players: '2-4 players',
+    ageRange: '8+ years',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Thayam.jpg/960px-Thayam.jpg',
+    imageSource: 'Wikimedia Commons',
+    rules: [
+      'The board is a cross-shaped track with a central home',
+      'Players roll long dice and move their coins by the number shown',
+      'A specific throw is needed to bring a piece out of the home area',
+      'Coins travel around the track and then climb toward the centre',
+      'Landing on a rival\'s space sends that piece back home',
+      'Marked squares are safe zones where pieces cannot be cut',
+      'Players may split the dice numbers between different coins',
+      'The first player to bring all coins to the centre wins',
+    ],
+    playable: false,
+    xpReward: 50,
+    achievements: ['Thayam Thrower', 'Coin Commander', 'Race Winner'],
+  },
+  {
+    id: 'sadugudu',
+    name: 'Sadugudu',
+    featuredRank: 15,
+    regionalName: 'சதுகுடு (Sadugudu)',
+    origin: 'South India (Tamil tradition)',
+    region: 'Tamil Nadu · South India',
+    description: 'A traditional team game of tag and pursuit. One player runs into the opposing team\'s half chanting "sadu-gudugudugudu" without pausing for breath, tries to touch an opponent, and dashes back to safety. If the chant stops or the runner is caught, they are out.',
+    history: 'Sadugudu is a traditional South Indian team game of tag and capture. It shares two features strongly associated with Kabaddi — a continuous, single-breath chant and a solo raider against a defending team — and is a playground tradition passed on informally rather than a formally codified sport.',
+    type: 'physical',
+    category: 'Physical Games',
+    players: '2 teams',
+    ageRange: '10+ years',
+    image: '',
+    rules: [
+      'The field is divided into two halves, one for each team',
+      'A player from the attacking team crosses into the opponents\' half alone',
+      'While in the opponents\' half, the raider must keep chanting "sadu-gudugudugudu" without a break',
+      'The raider aims to touch an opponent and then return safely to their own half',
+      'The defending team holds hands in a line until someone is touched',
+      'After a touch, defenders may chase, grab or pin the raider',
+      'If the raider stops chanting or is held until they run out of breath, they are out',
+      'Each touch of a defender scores, and the team with the most points wins',
+    ],
+    playable: false,
+    xpReward: 50,
+    achievements: ['Long Breath', 'Swift Raider', 'Team Champion'],
+  },
 ];
+
+/** The 15 featured games shown in the main grid, ordered by featuredRank. */
+export const FEATURED_GAMES: TraditionalGame[] = TRADITIONAL_GAMES
+  .filter((g) => g.featuredRank !== undefined)
+  .sort((a, b) => (a.featuredRank as number) - (b.featuredRank as number));
+
+/** Games beyond the featured fifteen, surfaced in the secondary "More Games" area. */
+export const MORE_GAMES: TraditionalGame[] = TRADITIONAL_GAMES.filter(
+  (g) => g.featuredRank === undefined
+);
 
 export const MISSION_TYPE_INFO: Record<string, { name: string; icon: string; description: string }> = {
   'lost-architecture': {

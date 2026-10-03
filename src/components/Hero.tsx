@@ -71,7 +71,8 @@ export default function Hero({ onActivateWheel, onExplore }: HeroProps) {
             {[
               { value: '7', label: 'Time Worlds' },
               { value: '10', label: 'Historic Forts' },
-              { value: '5', label: 'Traditional Games' },
+              { value: '30', label: 'Traditional Games' },
+              { value: '10', label: 'Ancient Toys' },
               { value: '40+', label: 'Missions' },
             ].map((stat) => (
               <div key={stat.label} className="text-center lg:text-left">

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { ChevronRight, Users, MapPin, BookOpen, Play, X, Info } from 'lucide-react';
-import { TRADITIONAL_GAMES, type TraditionalGame } from '@/data/gameData';
+import { FEATURED_GAMES, type TraditionalGame } from '@/data/gameData';
 import PallanguzhiGame from './games/PallanguzhiGame';
 import AaduPuliGame from './games/AaduPuliGame';
+import AncientGames from './games/AncientGames';
 
 export default function TraditionalGames() {
   const [selectedGame, setSelectedGame] = useState<TraditionalGame | null>(null);
@@ -36,7 +37,7 @@ export default function TraditionalGames() {
 
         {/* Games grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {TRADITIONAL_GAMES.map((game, idx) => (
+          {FEATURED_GAMES.map((game, idx) => (
             <div
               key={game.id}
               className="heritage-card rounded-xl overflow-hidden group"
@@ -88,6 +89,8 @@ export default function TraditionalGames() {
             </div>
           ))}
         </div>
+
+        <AncientGames />
       </div>
 
       {/* Game detail / play modal */}
