@@ -73,14 +73,14 @@ export default function AtyaPatyaGame() {
         const ny = Math.max(5, Math.min(95, a.y + moveRef.current.dy * 1.5));
         const newStamina = Math.max(0, a.stamina - (moveRef.current.dx || moveRef.current.dy ? 0.3 : 0));
         const regenStamina = moveRef.current.dx === 0 && moveRef.current.dy === 0 ? Math.min(100, a.stamina + 0.5) : newStamina;
-        let crossed = a.crossed;
+        let crossed: boolean = a.crossed;
         if (nx >= 95) { crossed = true; setScore((s) => s + 10); }
         return { ...a, x: nx, y: ny, stamina: regenStamina, crossed };
       }));
 
       // Move defenders toward nearest alive attacker
       setDefenders((prev) => prev.map((d) => {
-        let target: Attacker | null = null;
+        let target = null as Attacker | null;
         let minDist = Infinity;
         attackers.forEach((a) => {
           if (!a.alive || a.crossed) return;

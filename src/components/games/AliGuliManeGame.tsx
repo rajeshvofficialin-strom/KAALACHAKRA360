@@ -28,7 +28,7 @@ export default function AliGuliManeGame() {
   };
 
   const checkGameOver = (b: number[], s: [number, number]): boolean => {
-    if (!hasSeeds(0) || !hasSeeds(1)) {
+    if (!hasSeeds(b, 0) || !hasSeeds(b, 1)) {
       setGameOver(true);
       if (s[0] > s[1]) setMessage('Player 1 wins!');
       else if (s[1] > s[0]) setMessage('Player 2 wins!');

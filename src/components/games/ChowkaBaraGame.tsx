@@ -17,7 +17,7 @@ interface Piece {
 function rollCowries(difficulty: Difficulty): number {
   // Cowrie shells: 4 shells, each up/down. Count = 1-4, but 4 shells all up = 8 (special)
   const shells = Array.from({ length: 4 }).map(() => Math.random() > 0.5 ? 1 : 0);
-  let count = shells.reduce((a, b) => a + b, 0);
+  let count = shells.reduce<number>((a, b) => a + b, 0);
   if (count === 0) count = 8; // all down = 8 (special throw)
   // Difficulty affects AI luck slightly
   if (difficulty === 'easy' && Math.random() < 0.3) count = Math.max(count, 4);

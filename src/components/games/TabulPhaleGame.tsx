@@ -24,7 +24,7 @@ function createPieces(): [Piece[], Piece[]] {
 function rollStickDice(difficulty: Difficulty): number {
   // 4 stick dice: each flat/round. Count of flat = move value
   const sticks = Array.from({ length: 4 }).map(() => Math.random() > 0.5 ? 1 : 0);
-  let count = sticks.reduce((a, b) => a + b, 0);
+  let count = sticks.reduce<number>((a, b) => a + b, 0);
   if (count === 0) count = 8;
   if (difficulty === 'easy' && Math.random() < 0.25) count = Math.max(count, 4);
   if (difficulty === 'hard' && Math.random() < 0.25) count = Math.min(count, 3);
